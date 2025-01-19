@@ -1,10 +1,18 @@
-#include "background.cpp"
+#include "background.hpp"
+#include <iostream>
+
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
 int main(void) {
+    int exit_code;
 #ifdef _WIN32
     SetConsoleOutputCP(CP_UTF8);
-    run_command("./sleep.exe");
+    exit_code = run_command("./sleep.exe");
 #else
-    run_command("./sleep")
+    exit_code = run_command("./sleep");
 #endif
+    std::cout << "Код выхода программы: " << exit_code << std::endl;
     return 0;
 }
