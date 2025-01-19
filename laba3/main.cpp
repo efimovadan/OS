@@ -1,11 +1,12 @@
 #include <iostream>
 #include <thread>
 #include <string>
+#include <sstream>
 
-#include "mutex.cpp"
-#include "shared_memory.cpp"
-#include "logger.cpp"
-#include "async_process.cpp"
+#include "mutex.h"
+#include "logger.h"
+#include "shared_memory.h"
+#include "async_process.h"
 
 void logger_thread(
     Logger& logger, 
@@ -95,7 +96,6 @@ int main(int argc, char* argv[]) {
     SharedMemoryInt shared_memory("shared_int");
     Logger logger("application.log");
     bool is_working = true;
-
     if (argc > 2) {
         std::cout << "Invalid arguments count" << std::endl;
         exit(1);
@@ -132,6 +132,7 @@ int main(int argc, char* argv[]) {
         counter_th(counter_thread, std::ref(shared_memory), std::ref(mutex), std::ref(is_working)),
         input_th(input_terminal_thread, std::ref(shared_memory), std::ref(mutex), std::ref(is_working));
 
+    logger.log("App started");
     writeAndMakeCopiesMutex.lock();
     
     std::thread 
