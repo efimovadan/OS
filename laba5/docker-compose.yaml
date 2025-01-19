@@ -1,0 +1,18 @@
+version: '3'
+name: 'os-laba5'
+
+
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:13-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: os
+    volumes:
+      - ./database:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
